@@ -12,6 +12,7 @@ use crate::modules::dns::misconfig::MisconfigChecker;
 use crate::modules::web::vhost::VHostFuzzer;
 use crate::modules::web::probe::HttpProber;
 use crate::modules::specialized::buckets::CloudDiscovery;
+use crate::modules::specialized::ctstream::CertStreamer;
 use crate::engine::recursive::RecursiveEngine;
 use crate::engine::reporter::Reporter;
 use crate::modules::Module;
@@ -25,6 +26,11 @@ async fn main() -> error::Result<()> {
     println!("Subfoundit Laboratory Initialized!");
 
     let target = "example.com";
+
+    // Initialize CertStreamer
+    let _streamer = CertStreamer;
+    // We won't call .stream here as it's an infinite loop
+    // _streamer.stream(target).await;
 
     // Initialize Cloud Discovery
     let cloud_scout = CloudDiscovery { client: Client::new() };
