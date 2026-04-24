@@ -6,6 +6,7 @@ use crate::modules::passive::crtsh::Crtsh;
 use crate::modules::dns::resolver::Resolver;
 use crate::modules::dns::wildcard::WildcardFilter;
 use crate::modules::dns::bruteforce::Bruteforcer;
+use crate::modules::dns::permutation::Permutator;
 use crate::modules::Module;
 use reqwest::Client;
 use std::sync::Arc;
@@ -28,6 +29,10 @@ async fn main() -> error::Result<()> {
     let filter = WildcardFilter::detect(target, &resolver).await;
     let _ = filter.is_wildcard(&[]);
     let _ = resolver.inner();
+
+    // Initialize Permutator
+    let permutator = Permutator { keywords: vec!["dev".to_string()] };
+    let _mutations = permutator.generate("api.example.com");
 
     // Initialize the Passive Scout as a Module
     let scout: Box<dyn Module> = Box::new(Crtsh {
