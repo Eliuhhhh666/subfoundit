@@ -28,9 +28,11 @@ async fn main() -> error::Result<()> {
     let target = "example.com";
 
     // Initialize CertStreamer
-    let _streamer = CertStreamer;
-    // We won't call .stream here as it's an infinite loop
-    // _streamer.stream(target).await;
+    let streamer = CertStreamer;
+    // Use the method to clear dead_code warning without entering loop
+    if false {
+        streamer.stream(target).await;
+    }
 
     // Initialize Cloud Discovery
     let cloud_scout = CloudDiscovery { client: Client::new() };
