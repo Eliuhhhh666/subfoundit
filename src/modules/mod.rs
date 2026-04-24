@@ -1,5 +1,6 @@
 pub mod dns;
 pub mod passive;
+pub mod web;
 
 use async_trait::async_trait;
 use crate::model::Subdomain;

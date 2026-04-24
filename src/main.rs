@@ -9,6 +9,7 @@ use crate::modules::dns::wildcard::WildcardFilter;
 use crate::modules::dns::bruteforce::Bruteforcer;
 use crate::modules::dns::permutation::Permutator;
 use crate::modules::dns::misconfig::MisconfigChecker;
+use crate::modules::web::vhost::VHostFuzzer;
 use crate::engine::recursive::RecursiveEngine;
 use crate::modules::Module;
 use reqwest::Client;
@@ -20,6 +21,10 @@ async fn main() -> error::Result<()> {
     println!("Subfoundit Laboratory Initialized!");
 
     let target = "example.com";
+
+    // Initialize VHost Fuzzer
+    let fuzzer = VHostFuzzer { client: Client::new() };
+    let _ = fuzzer.check_vhost("1.2.3.4", target).await;
 
     // Initialize Misconfig Checker
     let checker = MisconfigChecker;
