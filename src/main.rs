@@ -17,6 +17,7 @@ use crate::modules::specialized::takeover::TakeoverChecker;
 use crate::modules::specialized::asn::AsnMapper;
 use crate::engine::recursive::RecursiveEngine;
 use crate::engine::reporter::Reporter;
+use crate::engine::monitor::Monitor;
 use crate::modules::Module;
 use crate::model::Subdomain;
 use reqwest::Client;
@@ -28,6 +29,11 @@ async fn main() -> error::Result<()> {
     println!("Subfoundit Laboratory Initialized!");
 
     let target = "example.com";
+
+    // Initialize Monitor
+    let monitor = Monitor;
+    let _ = monitor.find_new_assets(vec![], vec![]);
+    let _ = monitor.alert("http://localhost", "new.example.com").await;
 
     // Initialize the DNS Resolver
     let resolver = Arc::new(Resolver::new().await);
