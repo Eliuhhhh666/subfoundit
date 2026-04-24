@@ -8,16 +8,22 @@ use crate::modules::dns::resolver::Resolver;
 use crate::modules::dns::wildcard::WildcardFilter;
 use crate::modules::dns::bruteforce::Bruteforcer;
 use crate::modules::dns::permutation::Permutator;
+use crate::modules::dns::misconfig::MisconfigChecker;
 use crate::engine::recursive::RecursiveEngine;
 use crate::modules::Module;
 use reqwest::Client;
 use std::sync::Arc;
+use std::net::SocketAddr;
 
 #[tokio::main]
 async fn main() -> error::Result<()> {
     println!("Subfoundit Laboratory Initialized!");
 
     let target = "example.com";
+
+    // Initialize Misconfig Checker
+    let checker = MisconfigChecker;
+    let _ = checker.check_axfr(target, "1.1.1.1:53".parse::<SocketAddr>().unwrap());
 
     // Initialize Recursive Engine
     let engine = RecursiveEngine { max_depth: 1 };
