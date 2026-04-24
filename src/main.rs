@@ -12,7 +12,9 @@ use crate::modules::dns::misconfig::MisconfigChecker;
 use crate::modules::web::vhost::VHostFuzzer;
 use crate::modules::web::probe::HttpProber;
 use crate::engine::recursive::RecursiveEngine;
+use crate::engine::reporter::Reporter;
 use crate::modules::Module;
+use crate::model::Subdomain;
 use reqwest::Client;
 use std::sync::Arc;
 use std::net::SocketAddr;
@@ -22,6 +24,11 @@ async fn main() -> error::Result<()> {
     println!("Subfoundit Laboratory Initialized!");
 
     let target = "example.com";
+
+    // Initialize Reporter
+    let reporter = Reporter::new();
+    let mut _rx = reporter.subscribe();
+    reporter.report(Subdomain { name: "test.example.com".into(), source: "Test".into() });
 
     // Initialize HTTP Prober
     let prober = HttpProber::new();
