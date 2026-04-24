@@ -1,5 +1,6 @@
 pub mod dns;
 pub mod passive;
+pub mod specialized;
 pub mod web;
 
 use async_trait::async_trait;

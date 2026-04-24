@@ -11,6 +11,7 @@ use crate::modules::dns::permutation::Permutator;
 use crate::modules::dns::misconfig::MisconfigChecker;
 use crate::modules::web::vhost::VHostFuzzer;
 use crate::modules::web::probe::HttpProber;
+use crate::modules::specialized::buckets::CloudDiscovery;
 use crate::engine::recursive::RecursiveEngine;
 use crate::engine::reporter::Reporter;
 use crate::modules::Module;
@@ -24,6 +25,10 @@ async fn main() -> error::Result<()> {
     println!("Subfoundit Laboratory Initialized!");
 
     let target = "example.com";
+
+    // Initialize Cloud Discovery
+    let cloud_scout = CloudDiscovery { client: Client::new() };
+    let _ = cloud_scout.check_bucket("acme-assets", "acme-assets.s3.amazonaws.com").await;
 
     // Initialize Reporter
     let reporter = Reporter::new();
