@@ -14,6 +14,7 @@ use crate::modules::web::probe::HttpProber;
 use crate::modules::specialized::buckets::CloudDiscovery;
 use crate::modules::specialized::ctstream::CertStreamer;
 use crate::modules::specialized::takeover::TakeoverChecker;
+use crate::modules::specialized::asn::AsnMapper;
 use crate::engine::recursive::RecursiveEngine;
 use crate::engine::reporter::Reporter;
 use crate::modules::Module;
@@ -27,6 +28,13 @@ async fn main() -> error::Result<()> {
     println!("Subfoundit Laboratory Initialized!");
 
     let target = "example.com";
+
+    // Initialize the DNS Resolver
+    let resolver = Arc::new(Resolver::new().await);
+
+    // Initialize ASN Mapper
+    let asn_mapper = AsnMapper { resolver: resolver.inner() };
+    let _ = asn_mapper.sweep("127.0.0.1/32").await;
 
     // Initialize Takeover Checker
     let takeover_checker = TakeoverChecker { client: Client::new() };
