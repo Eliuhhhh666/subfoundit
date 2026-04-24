@@ -13,6 +13,7 @@ use crate::modules::web::vhost::VHostFuzzer;
 use crate::modules::web::probe::HttpProber;
 use crate::modules::specialized::buckets::CloudDiscovery;
 use crate::modules::specialized::ctstream::CertStreamer;
+use crate::modules::specialized::takeover::TakeoverChecker;
 use crate::engine::recursive::RecursiveEngine;
 use crate::engine::reporter::Reporter;
 use crate::modules::Module;
@@ -26,6 +27,10 @@ async fn main() -> error::Result<()> {
     println!("Subfoundit Laboratory Initialized!");
 
     let target = "example.com";
+
+    // Initialize Takeover Checker
+    let takeover_checker = TakeoverChecker { client: Client::new() };
+    let _ = takeover_checker.check(target, "example.github.io").await;
 
     // Initialize CertStreamer
     let streamer = CertStreamer;
