@@ -1,5 +1,4 @@
 use trust_dns_resolver::TokioAsyncResolver;
-use std::net::IpAddr;
 
 pub struct AsnMapper {
     pub resolver: TokioAsyncResolver,
