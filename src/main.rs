@@ -1,3 +1,4 @@
+mod engine;
 mod error;
 mod model;
 mod modules;
@@ -7,6 +8,7 @@ use crate::modules::dns::resolver::Resolver;
 use crate::modules::dns::wildcard::WildcardFilter;
 use crate::modules::dns::bruteforce::Bruteforcer;
 use crate::modules::dns::permutation::Permutator;
+use crate::engine::recursive::RecursiveEngine;
 use crate::modules::Module;
 use reqwest::Client;
 use std::sync::Arc;
@@ -16,6 +18,10 @@ async fn main() -> error::Result<()> {
     println!("Subfoundit Laboratory Initialized!");
 
     let target = "example.com";
+
+    // Initialize Recursive Engine
+    let engine = RecursiveEngine { max_depth: 1 };
+    engine.run(target).await;
 
     // Initialize the DNS Resolver
     let resolver = Arc::new(Resolver::new().await);
