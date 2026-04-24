@@ -1,3 +1,4 @@
+pub mod dns;
 pub mod passive;
 
 use async_trait::async_trait;
