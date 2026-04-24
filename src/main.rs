@@ -1,3 +1,7 @@
+mod error;
+mod model;
+mod modules;
+
 fn main() {
-    println!("Hello, world!");
+    println!("Subfoundit Laboratory Initialized!");
 }
