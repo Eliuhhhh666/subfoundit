@@ -6,8 +6,12 @@ edition = "2024"
 [dependencies]
 anyhow = "1.0.102"
 async-trait = "0.1.89"
+futures-util = "0.3.32"
+ipnetwork = "0.21.1"
 reqwest = { version = "0.11", features = ["json", "rustls-tls"] }
 serde = { version = "1.0.228", features = ["derive"] }
 serde_json = "1.0.149"
 tokio = { version = "1.52.1", features = ["full"] }
+tokio-tungstenite = "0.29.0"
+trust-dns-client = "0.23.2"
 trust-dns-resolver = "0.23.2"
