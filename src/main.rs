@@ -4,6 +4,7 @@ mod modules;
 
 use crate::modules::passive::crtsh::Crtsh;
 use crate::modules::dns::resolver::Resolver;
+use crate::modules::dns::wildcard::WildcardFilter;
 use crate::modules::Module;
 use reqwest::Client;
 
@@ -21,9 +22,9 @@ async fn main() -> error::Result<()> {
         println!("[+] Target {} resolves.", target);
     }
 
-    // Use other resolver methods to clear warnings
-    let _ = resolver.lookup_all_ips(target).await;
-    let _ = resolver.inner();
+    // Initialize Wildcard Filter
+    let filter = WildcardFilter::detect(target, &resolver).await;
+    let _ = filter.is_wildcard(&[]);
 
     // Initialize the Passive Scout as a Module
     let scout: Box<dyn Module> = Box::new(Crtsh {
